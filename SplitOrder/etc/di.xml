@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- API Preferences -->
+    <preference for="RltSquare\SplitOrder\Api\QuoteHandlerInterface" type="RltSquare\SplitOrder\Model\QuoteHandler"/>
+
+    <!-- Plugins -->
+    <type name="Magento\Quote\Model\QuoteManagement">
+        <plugin name="RltSquare-splitorder-split-quote" type="RltSquare\SplitOrder\Plugin\SplitQuote" sortOrder="1"/>
+    </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="save_order_tax" disabled="true"/>
+    </type>
+
+    <!-- Override -->
+    <preference for="Magento\Checkout\Block\Onepage\Success" type="RltSquare\SplitOrder\Block\Checkout\Success"/>
+
+    <!-- Proxies -->
+    <type name="RltSquare\SplitOrder\Model\QuoteHandler">
+        <arguments>
+            <argument name="QuoteHandler" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+</config>
